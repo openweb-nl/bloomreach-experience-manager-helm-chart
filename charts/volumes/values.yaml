@@ -1,0 +1,13 @@
+global:
+  applicationName: bem
+  env: prod
+createStorageClass: true
+basePath:
+  /var/k8s
+volumes:
+  - name: cassandra
+    capacity: 1000Gi
+nodes:
+  - node1
+  - node2
+  - node3

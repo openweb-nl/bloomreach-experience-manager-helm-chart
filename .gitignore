@@ -1,0 +1,8 @@
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+
+# samples folder is used to dumping yaml generated via helm chart for easier inspection
+samples
