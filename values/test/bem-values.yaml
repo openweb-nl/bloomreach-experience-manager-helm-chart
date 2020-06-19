@@ -1,21 +1,5 @@
 global:
+  env: "test"
   applicationName: "bem"
-  env: "prod"
-createStorageClass: false
-basePath:
-  /var/k8s
-volumes:
-  - type: repository
-    capacity: 10Gi
-    replicationPerNode: 1
-  - type: logs
-    capacity: 10Gi
-    replicationPerNode: 1
-  - type: database
-    capacity: 10Gi
-    replicationPerNode: 1
-nodes:
-  - node1
-  - node2
-  - node3
-  - node4
+
+replicaCount: 1

@@ -3,7 +3,7 @@ global:
   env: "prod"
 createStorageClass: true
 basePath:
-  /var/k8s
+  /var/lib/k8s
 volumes:
   - type: repository
     capacity: 10Gi

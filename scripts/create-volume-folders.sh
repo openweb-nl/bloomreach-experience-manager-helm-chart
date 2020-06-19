@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 possibleEnvs=("prod" "acc" "test" "local")
 volumes=("repository" "logs" "database")
-applicationName="myapp"
+applicationName="bem"
 basePath="/var/lib/k8s"
 replicationPerNode=4
 env="$1"

@@ -9,4 +9,6 @@ valuesFolder=${basePath}/values/${env}
 
 kubectl create namespace "${namespace}"
 
-helm install --namespace=${namespace}  -f ${valuesFolder}/bem-values.yaml volumes ${basePath}/charts/volumes/
+helm install --namespace=${namespace}  -f ${valuesFolder}/volumes-values.yaml volumes ${basePath}/charts/volumes/
+
+helm install --namespace=${namespace}  -f ${valuesFolder}/volumes-values.yaml ${namespace} ${basePath}/charts/bloomreach/
