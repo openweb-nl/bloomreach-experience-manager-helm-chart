@@ -5,8 +5,15 @@ createStorageClass: true
 basePath:
   /var/k8s
 volumes:
-  - name: cassandra
-    capacity: 1000Gi
+  - type: repository
+    capacity: 10Gi
+    replicationPerNode: 4
+  - type: logs
+    capacity: 10Gi
+    replicationPerNode: 4
+  - type: database
+    capacity: 10Gi
+    replicationPerNode: 4
 nodes:
   - node1
   - node2

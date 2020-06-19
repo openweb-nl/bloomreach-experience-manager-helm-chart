@@ -12,14 +12,15 @@ reclaimPolicy: Delete
 {{- end}}
 {{- range $index, $node := .Values.nodes -}}
 {{- range $k, $volume := $.Values.volumes }}
+{{- range $index, $e := until ($volume.replicationPerNode |int) }}
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ $volume.name | lower }}-pv-{{ $.Values.global.env }}-{{ $node }}
+  name: {{ $volume.type | lower }}-{{ $index }}-pv-{{ $.Values.global.env }}-{{ $node }}
   namespace: infra
   labels:
-    name: {{ $volume.name | quote }}
+    type: {{ $volume.type | quote }}
     env: {{ $.Values.global.env | quote }}
     application: {{ $.Values.global.applicationName | quote }}
     node: {{ $node | quote }}
@@ -31,10 +32,10 @@ spec:
   storageClassName: local-storage
 {{- if eq $.Values.global.env "local" }}
   hostPath:
-    path: {{ $.Values.basePath }}/{{ $.Values.global.env }}/{{ $volume.name }}
+    path: {{ $.Values.basePath }}/{{ $.Values.global.env }}/{{ $volume.type }}
 {{- else }}
   local:
-    path: {{ $.Values.basePath }}/{{ $.Values.global.env }}/{{ $volume.name }}
+    path: {{ $.Values.basePath }}/{{ $.Values.global.env }}/{{ $volume.type }}
 {{- end }}
   nodeAffinity:
     required:
@@ -44,5 +45,6 @@ spec:
               operator: In
               values:
                 - {{ $node }}
+{{- end }}
 {{- end }}
 {{- end }}
