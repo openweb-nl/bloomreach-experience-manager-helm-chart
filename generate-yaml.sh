@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-
-helm template deploymentName ./charts/volumes/ > ./samples/volumes.yml
-helm template deploymentName ./charts/bloomreach/ > ./samples/bloomreach.yml
+basePath=${BASH_SOURCE%/*}
+helm template deploymentName ${basePath}/charts/volumes/ > ${basePath}/samples/volumes.yml
+helm template deploymentName ${basePath}/charts/bloomreach/ > ${basePath}/samples/bloomreach.yml
