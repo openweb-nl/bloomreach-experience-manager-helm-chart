@@ -32,10 +32,10 @@ spec:
   storageClassName: local-storage
 {{- if eq $.Values.global.env "local" }}
   hostPath:
-    path: {{ $.Values.basePath }}/{{ $.Values.global.env }}/{{ $volume.type }}
+    path: {{ $.Values.basePath }}/{{ $.Values.global.env }}/{{ $.Values.global.applicationName }}/{{ $volume.type }}-{{ $index }}
 {{- else }}
   local:
-    path: {{ $.Values.basePath }}/{{ $.Values.global.env }}/{{ $volume.type }}
+    path: {{ $.Values.basePath }}/{{ $.Values.global.env }}/{{ $.Values.global.applicationName }}/{{ $volume.type }}-{{ $index }}
 {{- end }}
   nodeAffinity:
     required:

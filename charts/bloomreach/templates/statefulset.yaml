@@ -10,6 +10,22 @@ spec:
   selector:
     matchLabels:
       {{- include "bloomreach.selectorLabels" . | nindent 6 }}
+  volumeClaimTemplates:
+    {{- range $.Values.volumeClaims }}
+    - metadata:
+        name: {{ .name | quote}}
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: {{ .storageClassName }}
+        selector:
+          matchLabels:
+            application: {{ $.Values.global.applicationName | quote}}
+            env: {{ $.Values.global.env | quote  }}
+            type: {{ .type | quote}}
+        resources:
+          requests:
+            storage: {{ .size | quote}}
+    {{- end }}
   template:
     metadata:
       labels:
@@ -45,6 +61,11 @@ spec:
             httpGet:
               path: /
               port: http
+          volumeMounts:
+            {{- range $.Values.volumeClaims }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+            {{- end }}
           resources:
             {{- toYaml $.Values.resources | nindent 12 }}
       {{- with $.Values.nodeSelector }}

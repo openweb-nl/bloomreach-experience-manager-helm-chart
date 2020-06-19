@@ -1,6 +1,6 @@
 global:
-  applicationName: bem
-  env: prod
+  applicationName: "bem"
+  env: "prod"
 createStorageClass: true
 basePath:
   /var/k8s
