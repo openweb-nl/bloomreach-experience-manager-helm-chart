@@ -12,6 +12,9 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+env:
+  TZ: "Europe/Amsterdam"
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
