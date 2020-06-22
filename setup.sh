@@ -13,4 +13,6 @@ kubectl apply --namespace=${namespace} -f ${valuesFolder}/secrets.yml
 
 helm install --namespace=${namespace}  -f ${valuesFolder}/volumes-values.yaml volumes ${basePath}/charts/volumes/
 
+helm install  --namespace=${namespace} -f ${valuesFolder}/mysql-values.yaml mysql ${basePath}/charts/mysql/
+
 helm install --namespace=${namespace}  -f ${valuesFolder}/bem-values.yaml ${namespace} ${basePath}/charts/bloomreach/

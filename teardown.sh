@@ -9,6 +9,8 @@ valuesFolder=${basePath}/values/${env}
 
 helm uninstall --namespace=${namespace} myapp
 
+helm uninstall --namespace=${namespace} mysql
+
 deletePvcs "${namespace}"
 
 helm uninstall --namespace=${namespace} volumes

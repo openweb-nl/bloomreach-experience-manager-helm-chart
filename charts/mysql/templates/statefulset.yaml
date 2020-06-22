@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "mysql.fullname" . }}
+  labels:
+    {{- include "mysql.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ $.Release.Name }}-mysql
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "mysql.selectorLabels" . | nindent 6 }}
+  volumeClaimTemplates:
+    {{- range $.Values.volumeClaims }}
+    - metadata:
+        name: {{ .name | quote}}
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: {{ .storageClassName }}
+        selector:
+          matchLabels:
+            application: {{ $.Values.global.applicationName | quote}}
+            env: {{ $.Values.global.env | quote  }}
+            type: {{ .type | quote}}
+        resources:
+          requests:
+            storage: {{ .size | quote}}
+    {{- end }}
+  template:
+    metadata:
+      labels:
+        {{- include "mysql.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "mysql.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: mysql
+              containerPort: 3306
+              protocol: TCP
+          env:
+            {{- range  $.Values.envFromSecert }}
+            - name: {{ .name | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .secretName | quote}}
+                  key: {{ .secretKey | quote}}
+            {{- end }}
+            {{- range  $.Values.envFromConfigMap }}
+            - name: {{ .name | quote }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .configmapName | quote}}
+                  key: {{ .configmapKey | quote}}
+            {{- end }}
+            {{- range  $key, $value := $.Values.env }}
+            - name: {{ $key | quote}}
+              value: {{  $value | quote }}
+          {{- end }}
+          args:
+            - "--max_allowed_packet=512M"
+            - "--innodb_log_file_size=200M"
+            - "--character-set-server=utf8"
+            - "--collation-server=utf8_general_ci"
+            - "--max_connections=250"
+          readinessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -c
+                - mysql -h 127.0.0.1 -u root -p$MYSQL_ROOT_PASSWORD -e "SELECT 1"
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -c
+                - mysql -h 127.0.0.1 -u root -p$MYSQL_ROOT_PASSWORD -e "SELECT 1"
+            initialDelaySeconds: 60
+            periodSeconds: 27
+            failureThreshold: 5
+            successThreshold: 1
+            timeoutSeconds: 5
+          volumeMounts:
+            {{- range $.Values.volumeClaims }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+            {{- end }}
+          resources:
+            {{- toYaml $.Values.resources | nindent 12 }}
+      {{- with $.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with $.Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with $.Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

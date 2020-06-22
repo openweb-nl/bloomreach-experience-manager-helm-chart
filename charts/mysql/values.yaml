@@ -1,0 +1,76 @@
+# Default values for mysql.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+global:
+  applicationName: "bem"
+  env: "prod"
+
+image:
+  repository: mysql
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+env:
+  TZ: "Europe/Amsterdam"
+  MYSQL_DATABASE: "hippo"
+  MYSQL_USER: "hippo"
+
+envFromSecert:
+  - name: "MYSQL_ROOT_PASSWORD"
+    secretName: "bloomreach-secrets"
+    secretKey: "databaseRootPassword"
+  - name: "MYSQL_PASSWORD"
+    secretName: "bloomreach-secrets"
+    secretKey: "databasePassword"
+
+envFromConfigMap: []
+#  - name: "ENV_VAR_NAME"
+#    configmapName: "configmap-name"
+#    configmapKey: "configmap-key"
+
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 3066
+
+volumeClaims:
+  - name: "mysql-data"
+    type: "database"
+    mountPath: "/var/lib/mysql"
+    storageClassName: "local-storage"
+    size: "10G"
+
+resources:
+  limits:
+    cpu: 2000m
+    memory: 512Mi
+  requests:
+    cpu: 300m
+    memory: 512Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
