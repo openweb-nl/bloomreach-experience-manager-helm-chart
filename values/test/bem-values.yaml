@@ -3,3 +3,8 @@ global:
   applicationName: "bem"
 
 replicaCount: 1
+
+envFromSecert:
+  - name: "DB_PASS"
+    secretName: "bloomreach-secrets"
+    secretKey: "databasePassword"

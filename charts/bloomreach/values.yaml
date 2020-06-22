@@ -15,6 +15,16 @@ fullnameOverride: ""
 env:
   TZ: "Europe/Amsterdam"
 
+envFromSecert: []
+#  - name: "DB_PASS"
+#    secretName: "bloomreach-secrets"
+#    secretKey: "databasePassword"
+
+envFromConfigMap: []
+#  - name: "ENV_VAR_NAME"
+#    configmapName: "configmap-name"
+#    configmapKey: "configmap-key"
+
 volumeClaims:
   - name: "repository"
     type: "repository"

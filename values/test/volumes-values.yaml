@@ -7,13 +7,13 @@ basePath:
 volumes:
   - type: repository
     capacity: 10Gi
-    replicationPerNode: 1
+    replicationPerNode: 4
   - type: logs
     capacity: 10Gi
-    replicationPerNode: 1
+    replicationPerNode: 4
   - type: database
     capacity: 10Gi
-    replicationPerNode: 1
+    replicationPerNode: 4
 nodes:
   - node1
   - node2

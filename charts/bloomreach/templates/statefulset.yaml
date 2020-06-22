@@ -49,6 +49,20 @@ spec:
               containerPort: 80
               protocol: TCP
           env:
+            {{- range  $.Values.envFromSecert }}
+            - name: {{ .name | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .secretName | quote}}
+                  key: {{ .secretKey | quote}}
+            {{- end }}
+            {{- range  $.Values.envFromConfigMap }}
+            - name: {{ .name | quote }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .configmapName | quote}}
+                  key: {{ .configmapKey | quote}}
+            {{- end }}
             {{- range  $key, $value := $.Values.env }}
             - name: {{ $key | quote}}
               value: {{  $value | quote }}
