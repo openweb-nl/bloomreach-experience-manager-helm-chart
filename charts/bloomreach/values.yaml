@@ -37,7 +37,12 @@ volumeClaims:
     storageClassName: "local-storage"
     size: "10G"
 
-
+mountFileFromSecrect: []
+#  - name: "some-setting"
+#    fileName: "filename.txt"
+#    folder: "/path/to/folder"
+#    secretName: "secret-name"
+#    secretKey: "secret-key"
 
 serviceAccount:
   # Specifies whether a service account should be created

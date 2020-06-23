@@ -80,8 +80,25 @@ spec:
             - name: {{ .name }}
               mountPath: {{ .mountPath }}
             {{- end }}
+            {{- range $.Values.mountFileFromSecrect }}
+            - name: {{ .name | quote }}
+              subPath: {{ .fileName | quote }}
+              mountPath: "{{ .folder }}/{{ .fileName }}"
+              readOnly: true
+            {{- end }}
           resources:
             {{- toYaml $.Values.resources | nindent 12 }}
+      {{- if len $.Values.mountFileFromSecrect | ne  0 }}
+      volumes:
+        {{- range $.Values.mountFileFromSecrect }}
+        - name: {{ .name | quote }}
+          secret:
+            secretName: {{ .secretName | quote }}
+            items:
+              - key: {{ .secretKey | quote }}
+                path: "./{{ .fileName }}"
+        {{- end }}
+      {{- end }}
       {{- with $.Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
