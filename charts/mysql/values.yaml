@@ -52,7 +52,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 3066
+  port: 3306
 
 volumeClaims:
   - name: "mysql-data"

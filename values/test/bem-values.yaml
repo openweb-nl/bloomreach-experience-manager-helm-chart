@@ -2,7 +2,19 @@ global:
   env: "test"
   applicationName: "bem"
 
+image:
+  repository: openweb/hippo-cms-ootb
+  pullPolicy: Always
+
 replicaCount: 1
+
+env:
+  TZ: "Europe/Amsterdam"
+  DB_HOST: "mysql"
+  DB_PORT: "3306"
+  DB_NAME: "hippo"
+  DB_USER: "hippo"
+  SET_NODE_ID: "true"
 
 envFromSecert:
   - name: "DB_PASS"
