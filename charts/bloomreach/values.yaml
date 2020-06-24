@@ -37,7 +37,7 @@ readinessProbe:
   path: /cms/ping/
   initialDelaySeconds: 5
   periodSeconds: 5
-  failureThreshold: 1
+  failureThreshold: 3
   successThreshold: 1
   timeoutSeconds: 5
 
@@ -102,8 +102,7 @@ resources:
     cpu: 3000m
     memory: 768Mi
   requests:
-    cpu: 1000m
-    memory: 512Mi
+    cpu: 500m
 
 nodeSelector: {}
 

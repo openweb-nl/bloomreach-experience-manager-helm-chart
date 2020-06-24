@@ -98,7 +98,12 @@ spec:
               readOnly: true
             {{- end }}
           resources:
-            {{- toYaml $.Values.resources | nindent 12 }}
+            limits:
+              cpu: {{ $.Values.resources.limits.cpu | quote }}
+              memory: {{ $.Values.resources.limits.memory | quote }}
+            requests:
+              cpu: {{ $.Values.resources.requests.cpu | quote }}
+              memory: {{ $.Values.resources.limits.memory | quote }}
       {{- if len $.Values.mountFileFromSecrect | ne  0 }}
       volumes:
         {{- range $.Values.mountFileFromSecrect }}
