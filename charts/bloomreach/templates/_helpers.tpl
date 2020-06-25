@@ -37,8 +37,8 @@ Common labels
 {{- define "bloomreach.labels" -}}
 helm.sh/chart: {{ include "bloomreach.chart" . }}
 {{ include "bloomreach.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ $.Chart.AppVersion | quote }}
+{{- if $.Values.image.version }}
+app.kubernetes.io/version: {{ $.Values.image.version | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ $.Release.Service }}
 {{- end -}}
