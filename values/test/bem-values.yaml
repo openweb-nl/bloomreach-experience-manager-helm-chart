@@ -10,15 +10,17 @@ replicaCount: 1
 
 ingress:
   enabled: ture
-  hosts:
-    - host: cms-bloomreach.openweb.nl
-      paths:
-        - "/cms"
-        - "/site"
-  tls:
-    - hosts:
-        - cms-bloomreach.openweb.nl
-      # secretName: chart-example-tls
+  cms:
+    host: cms-bloomreach.openweb.nl
+    tls: true
+    # secretName: cms-example-tls
+    additionalAnnotations: []
+  site:
+    host: site-bloomreach.openweb.nl
+    tls: true
+    additionalAnnotations: []
+    # secretName: cms-example-tls
+
 
 env:
   TZ: "Europe/Amsterdam"
