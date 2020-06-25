@@ -38,9 +38,9 @@ readinessProbe:
   path: /cms/ping/
   initialDelaySeconds: 5
   periodSeconds: 5
-  failureThreshold: 3
+  failureThreshold: 1
   successThreshold: 1
-  timeoutSeconds: 5
+  timeoutSeconds: 3
 
 terminationGracePeriodSeconds: 30
 
