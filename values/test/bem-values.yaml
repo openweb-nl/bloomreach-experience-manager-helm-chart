@@ -6,7 +6,7 @@ image:
   repository: openweb/hippo-cms-ootb
   pullPolicy: Always
 
-replicaCount: 4
+replicaCount: 1
 
 ingress:
   enabled: ture

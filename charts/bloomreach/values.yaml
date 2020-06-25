@@ -14,8 +14,8 @@ fullnameOverride: ""
 
 env:
   TZ: "Europe/Amsterdam"
-  MAX_RAM_PERCENTAGE: "60"
-  EXTRA_OPTS: "-XX:MaxMetaspaceSize=200m -XX:MaxDirectMemorySize=100m"
+  MAX_RAM_PERCENTAGE: "50"
+  EXTRA_OPTS: ""
 
 envFromSecert: []
 #  - name: "DB_PASS"
@@ -111,7 +111,7 @@ ingress:
 resources:
   limits:
     cpu: 3000m
-    memory: 1024Mi
+    memory: 1G
   requests:
     cpu: 500m
 
