@@ -14,7 +14,7 @@ fullnameOverride: ""
 
 env:
   TZ: "Europe/Amsterdam"
-  MAX_RAM_PERCENTAGE: "50"
+  MAX_RAM_PERCENTAGE: "60"
   EXTRA_OPTS: ""
 
 envFromSecert: []
@@ -101,7 +101,7 @@ ingress:
 resources:
   limits:
     cpu: 3000m
-    memory: 1G
+    memory: 2G
   requests:
     cpu: 500m
 
