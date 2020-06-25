@@ -6,7 +6,19 @@ image:
   repository: openweb/hippo-cms-ootb
   pullPolicy: Always
 
-replicaCount: 1
+replicaCount: 4
+
+ingress:
+  enabled: ture
+  hosts:
+    - host: cms-bloomreach.openweb.nl
+      paths:
+        - "/cms"
+        - "/site"
+  tls:
+    - hosts:
+        - cms-bloomreach.openweb.nl
+      # secretName: chart-example-tls
 
 env:
   TZ: "Europe/Amsterdam"
