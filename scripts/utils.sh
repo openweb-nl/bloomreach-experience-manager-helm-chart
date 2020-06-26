@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 possibleEnvs=("test")
+scriptsFolder=${BASH_SOURCE%/*}
 
 function contains() {
     local n=$#
@@ -31,13 +32,14 @@ function areYouSure() {
 }
 
 function validationEnv() {
-  argumentRequiredMessage="This script expect an argument containing the environment flag. Accepted values are [${possibleEnvs[@]}]"
+  argumentRequiredMessage="This script expect an argument containing the environment flag"
   if [[ -z ${1} ]]; then
     exitWithError "${argumentRequiredMessage}"
   fi
-  if [[ $(contains "${possibleEnvs[@]}" "${1}") == "n" ]]; then
-    exitWithError "${argumentRequiredMessage}"
+  if [[ ! -d "${scriptsFolder}/../values/${1}" ]]; then
+    exitWithError "Environment: '${1}' not found in values folder."
   fi
+  envFolder="${scriptsFolder}/../values/${1}"
 }
 
 function gettingUserConsent() {
