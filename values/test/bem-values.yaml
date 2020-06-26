@@ -5,6 +5,7 @@ global:
 image:
   repository: openweb/hippo-cms-ootb
   pullPolicy: Always
+  version: "13.4.2"
 
 replicaCount: 1
 
