@@ -30,7 +30,7 @@ envFromConfigMap: []
 
 livenessProbe:
   path: /cms/ping/
-  initialDelaySeconds: 120
+  initialDelaySeconds: 60
   periodSeconds: 30
   failureThreshold: 20
   successThreshold: 2
@@ -43,7 +43,7 @@ readinessProbe:
   successThreshold: 1
   timeoutSeconds: 1
 
-terminationGracePeriodSeconds: 30
+terminationGracePeriodSeconds: 15
 
 volumeClaims:
   - name: "repository"
