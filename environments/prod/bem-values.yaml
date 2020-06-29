@@ -1,0 +1,37 @@
+global:
+  env: "prod"
+  applicationName: "theapp"
+
+image:
+  repository: openweb/hippo-cms-ootb
+  pullPolicy: Always
+  version: "13.4.2"
+
+replicaCount: 4
+
+ingress:
+  enabled: ture
+  cms:
+    host: prod-cms-bloomreach.openweb.nl
+    tls: true
+    # secretName: cms-example-tls
+    additionalAnnotations: []
+  site:
+    host: prod-site-bloomreach.openweb.nl
+    tls: true
+    additionalAnnotations: []
+    # secretName: cms-example-tls
+
+
+env:
+  TZ: "Europe/Amsterdam"
+  DB_HOST: "mysql"
+  DB_PORT: "3306"
+  DB_NAME: "hippo"
+  DB_USER: "hippo"
+  SET_NODE_ID: "true"
+
+envFromSecert:
+  - name: "DB_PASS"
+    secretName: "bloomreach-secrets"
+    secretKey: "databasePassword"
