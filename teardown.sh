@@ -7,7 +7,11 @@ validationEnv ${env}
 valuesFolder=${basePath}/environments/${env}
 . ${basePath}/environments/${env}/variables.sh
 
-helm uninstall --namespace=${namespace} myapp
+if [[ ! -z "$2" ]]; then
+deployment="$2"
+fi
+
+helm uninstall --namespace=${namespace} ${deployment}
 
 helm uninstall --namespace=${namespace} mysql
 
