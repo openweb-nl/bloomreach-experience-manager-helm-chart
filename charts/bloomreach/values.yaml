@@ -33,7 +33,6 @@ livenessProbe:
   initialDelaySeconds: 60
   periodSeconds: 30
   failureThreshold: 20
-  successThreshold: 2
   timeoutSeconds: 3
 readinessProbe:
   path: /cms/ping/
