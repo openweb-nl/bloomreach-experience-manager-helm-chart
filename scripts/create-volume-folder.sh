@@ -17,11 +17,10 @@ validationEnv "${env}"
 . ${envFolder}/variables.sh
 
 
-echo "Env: ${env}"
 echo "User: ${user}"
 echo "Servers: ${servers}"
 
-areYouSure
+gettingUserConsent ${env}
 
 volumeFolder="${volumesRootFolder}/${env}/${applicationName}"
 

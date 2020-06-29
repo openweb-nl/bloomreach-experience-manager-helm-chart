@@ -4,7 +4,7 @@ env="$1"
 
 . ${basePath}/scripts/utils.sh
 validationEnv ${env}
-valuesFolder=${basePath}/values/${env}
+valuesFolder=${basePath}/environments/${env}
 . ${valuesFolder}/variables.sh
 
 kubectl create namespace "${namespace}"
@@ -15,4 +15,4 @@ helm install --namespace=${namespace}  -f ${valuesFolder}/volumes-values.yaml vo
 
 helm install  --namespace=${namespace} -f ${valuesFolder}/mysql-values.yaml mysql ${basePath}/charts/mysql/
 
-helm install --namespace=${namespace}  -f ${valuesFolder}/bem-values.yaml ${namespace} ${basePath}/charts/bloomreach/
+helm install --namespace=${namespace}  -f ${valuesFolder}/bem-values.yaml ${deployment} ${basePath}/charts/bloomreach/

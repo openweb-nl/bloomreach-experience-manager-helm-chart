@@ -4,8 +4,8 @@ env="$1"
 
 . ${basePath}/scripts/utils.sh
 validationEnv ${env}
-valuesFolder=${basePath}/values/${env}
-. ${basePath}/values/${env}/variables.sh
+valuesFolder=${basePath}/environments/${env}
+. ${basePath}/environments/${env}/variables.sh
 
 helm uninstall --namespace=${namespace} myapp
 

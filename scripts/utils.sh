@@ -36,10 +36,10 @@ function validationEnv() {
   if [[ -z ${1} ]]; then
     exitWithError "${argumentRequiredMessage}"
   fi
-  if [[ ! -d "${scriptsFolder}/../values/${1}" ]]; then
+  if [[ ! -d "${scriptsFolder}/../environments/${1}" ]]; then
     exitWithError "Environment: '${1}' not found in values folder."
   fi
-  envFolder="${scriptsFolder}/../values/${1}"
+  envFolder="${scriptsFolder}/../environments/${1}"
 }
 
 function gettingUserConsent() {
