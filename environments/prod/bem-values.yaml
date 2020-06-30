@@ -25,11 +25,19 @@ ingress:
 
 env:
   TZ: "Europe/Amsterdam"
+  MAX_RAM_PERCENTAGE: "60"
   DB_HOST: "mysql"
   DB_PORT: "3306"
   DB_NAME: "hippo"
   DB_USER: "hippo"
   SET_NODE_ID: "true"
+
+resources:
+  limits:
+    cpu: 3000m
+    memory: 2G
+  requests:
+    cpu: 500m
 
 envFromSecert:
   - name: "DB_PASS"
