@@ -1,7 +1,7 @@
 global:
   applicationName: "bem"
   env: "prod"
-createStorageClass: true
+createStorageClass: false
 basePath:
   /var/lib/k8s
 volumes:

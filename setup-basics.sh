@@ -9,6 +9,8 @@ valuesFolder=${basePath}/environments/${env}
 
 kubectl create namespace "${namespace}"
 
+kubectl apply -f ${basePath}/k8s/storageclass.yaml
+
 kubectl apply --namespace=${namespace} -f ${valuesFolder}/secrets.yml
 
 helm install --namespace=${namespace}  -f ${valuesFolder}/volumes-values.yaml volumes ${basePath}/charts/volumes/
