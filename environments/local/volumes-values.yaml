@@ -1,0 +1,19 @@
+global:
+  env: "local"
+  applicationName: "theapp"
+
+createStorageClass: false
+basePath:
+  /c/k8s/volumes
+volumes:
+  - type: repository
+    capacity: 10Gi
+    replicationPerNode: 1
+  - type: logs
+    capacity: 10Gi
+    replicationPerNode: 1
+  - type: database
+    capacity: 10Gi
+    replicationPerNode: 1
+nodes:
+  - docker-desktop
