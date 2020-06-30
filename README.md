@@ -1,8 +1,11 @@
 # Helm chart for Bloomreach Experience Manager (Formerly known as Hippo)
 
+## Notice
+This helm chart can work with any version of Bloomreach Experience Manager (Formerly known as Hippo) higher than an equal 7.x
 ## Goal of this project
 The goal of this project is to provide a helm chart that can be used both for setting up a production environment 
 as well as test environments for Bloomreach Experience Manager (Formerly known as Hippo) with ease on a Kubernetes cluster.
+
 
 
 ## Assumptions
@@ -141,6 +144,30 @@ you need to check a few things
     * add the following lines to your host file
         * 127.0.0.1	     cms-bloomreach.localhost
         * 127.0.0.1	     site-bloomreach.localhost
+        
+## Running your own docker image
+In this example, we are using a docker image that is based on Openweb docker image at docker hub 
+[https://hub.docker.com/repository/docker/openweb/hippo](https://hub.docker.com/repository/docker/openweb/hippo)
+although you can use this Helm chart with any docker image that you want but we highly recommend you to use Openweb docker image 
+as your from image. Because it has some unique features that make it suited for running on Kubernetes. Some of this feature are:
+
+* Finely tuned memory configuration to avoid OOM kills
+* Pod name is used as node name
+* Tuned for maximum request through 
+* UTF-8 Encoding configured everywhere so that you never run into any encoding issues
+
+To configure your own image you need to change bem-values.yaml as show below
+```yaml
+image:
+  repository: <yourRepository>
+  pullPolicy: Always
+  version: "<tag>"
+
+  imagePullSecrets:
+    - name: "regcred"
+```
+You also need to create an image pull secrets with the name "regcred" in the namespace of the application. 
+To do so follow instructions on (https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)[https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/] 
 
 ## License 
 Copyright 2020 Open Web IT B.V. subject to the terms and conditions of the Apache Software License 2.0. A copy of the 
