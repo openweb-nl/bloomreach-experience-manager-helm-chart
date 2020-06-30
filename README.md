@@ -54,3 +54,95 @@ then you run the script
  "user" is the name of the user that you use to ssh to a worker machine. The rest of arguments are just a list of ip addresses 
  of the worker machines (or their hostname).
 
+## Setup
+There are two ways you can set up a Bloomreach cluster using scripts in this project. Either you can set up the whole thing 
+using only a single command, or you can do it step by step via running 3 separate commands. 
+Step by step approach would give you more control over certain aspects of your deployment.
+
+### One-step setup
+Once step setup is rather easy you just need to run the following command
+```bash
+./setup-all.sh <envName>
+```
+Where envName is the name of one of the folder under "environments" folder. Please see "Environment folder" section for more details.
+so for example once could run the following command:
+```bash
+./setup-all.sh test
+```
+### Step-by-step setup
+In this approach you set up each piece independently. 
+#### Setup the basics
+In this setup we set up the following:
+* Creating a namespace
+* Apply Secrets
+* Creating PersistentVolume's
+To run this step run:
+```bash
+./setup-basics.sh <envName>
+```  
+#### Setup MySQL
+To run this step run:
+```bash
+./setup-mysql.sh <envName>
+```
+#### Setup the application
+In this step, you have a choice you could either use the following command:
+```bash
+./setup-mysql.sh <envName>
+```
+which setups the bloomreach application using deployment name specified in the environments files.
+or you could override the deployment name using the following command:
+```bash
+./setup-mysql.sh <envName> <deploymentName>
+```
+This is useful when you want to have multiple envs connected to the same db running side by side. 
+Let's say a cms cluster and a site cluster.
+
+## Update
+To update your application in case you have changed anything in your "bem-values.yaml" file. e.g. 
+Changing the version of the application, the number of replicas, ingress urls etc.
+Run the following command to apply your changes:
+```bash
+./update.sh <envName>
+```
+or if you have overridden the deploymentName during set up the run: 
+```bash
+./update.sh <envName> <deploymentName>
+```
+## Teardown
+To teardown everything run the following command:
+```bash
+./teardown.sh <envName>
+```
+or if you have overridden the deploymentName during set up the run: 
+```bash
+./teardown.sh <envName> <deploymentName>
+```
+To delete the volumes on the server after running the teardown command run 
+```bash
+./scripts/delete-volume-folder.sh <envName> <user> <server1IpAddress> <server2IpAddress> <server2IpAddress>
+```
+This would delete all volume folders of this particular environment on the remote server.
+
+## Running locally
+You can run this on you local environment in my case I am running it on Docker for Windows, 
+but I assume it would also work more or less the same way on Docker for Mac. Before you run this one your local machine
+you need to check a few things
+* Make sure "Enable Kubernetes" is check in the setting of your Docker for Windows/Mac
+* Review the file "/environments/local/volumes-values.yaml" there are two things to pay attention to
+    * Node name, in my case my kubernetes node is called "docker-desktop". Change it if it is different for you 
+    you can find it out by running "kubectl get nodes" 
+    * BasePath i used "/c/k8s/volumes" as base path but I guess you would like to change it in case you are running on mac.
+    **Please make sure that this folder exist but on like running on a actual kubernetes environment you don't need to create 
+    all the volume folders manually they will be automatically created. So you do not need to run create-volume-folder.sh locally**  
+* Enabling ingress (optional) if you want the ingress to work locally, you need to: 
+    * Follow the instruction on [https://kubernetes.github.io/ingress-nginx/deploy/](https://kubernetes.github.io/ingress-nginx/deploy/) 
+    for Docker for Mac (The same step would work on Docker for Windows as well)
+    * add the following lines to your host file
+        * 127.0.0.1	     cms-bloomreach.localhost
+        * 127.0.0.1	     site-bloomreach.localhost
+
+## License 
+Copyright 2020 Open Web IT B.V. subject to the terms and conditions of the Apache Software License 2.0. A copy of the 
+license is contained in the file [LICENSE](LICENSE) and is also available at [http://www.apache.org/licenses/LICENSE-2.0.html](http://www.apache.org/licenses/LICENSE-2.0.html).
+ 
