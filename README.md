@@ -145,6 +145,12 @@ you need to check a few things
         * 127.0.0.1	     cms-bloomreach.localhost
         * 127.0.0.1	     site-bloomreach.localhost
         
+### Running a multiple nodes cluster (Bloomreach not K8S NODE) locally
+You can even run a cluster of multiple bloomreach node locally. The only thing you need to do is to run
+```bash
+./setup-all.sh local-multinode
+```
+        
 ## Running your own docker image
 In this example, we are using a docker image that is based on Openweb docker image at docker hub 
 [https://hub.docker.com/repository/docker/openweb/hippo](https://hub.docker.com/repository/docker/openweb/hippo)
