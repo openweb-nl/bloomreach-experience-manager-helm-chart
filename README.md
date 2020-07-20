@@ -17,7 +17,11 @@ adjustments to the setup. (If you need any help you can contact us at [https://w
 The MySQL chart in the project isn't meant to be used in a production scenario and only meant for demonstration purposes 
 or a test environment scenario. In the case of a production environment, we recommend a far more sophisticated setup. 
 
-
+## Prerequisite
+Before you run this helm chart make sure that the control machine (The machine that runs the script) meet the following prerequisites 
+* Make sure that kubectl is installed on the machine
+* Make sure that kubectl is configured to connect to the cluster where you want to install your application
+* Make sure that Helm chart version 3 or later has been installed
 
 ## Pre-setup
 ### Environment folder
