@@ -5,7 +5,7 @@ global:
 image:
   repository: openweb/hippo-cms-ootb
   pullPolicy: Always
-  version: "13.4.2"
+  version: "13.4.2-sec"
 
 replicaCount: 4
 
@@ -43,3 +43,12 @@ envFromSecert:
   - name: "DB_PASS"
     secretName: "bloomreach-secrets"
     secretKey: "databasePassword"
+
+podSecurityContext:
+  runAsUser: 1000
+  runAsGroup: 3000
+  fsGroup: 2000
+
+securityContext:
+  allowPrivilegeEscalation: false
+
