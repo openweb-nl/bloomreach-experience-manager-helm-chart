@@ -10,7 +10,7 @@ image:
 replicaCount: 4
 
 ingress:
-  enabled: ture
+  enabled: true
   cms:
     host: prod-cms-bloomreach.openweb.nl
     tls: true

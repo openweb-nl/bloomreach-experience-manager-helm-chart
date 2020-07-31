@@ -95,12 +95,12 @@ Run this step with the command:
 #### Setup the application
 In this step, you have a choice you could either use the following command:
 ```bash
-./setup-mysql.sh <envName>
+./setup-app.sh <envName>
 ```
 which sets up the bloomreach application using the deployment name specified in the environments files, 
 or you could override the deployment name using the following command:
 ```bash
-./setup-mysql.sh <envName> <deploymentName>
+./setup-app.sh <envName> <deploymentName>
 ```
 This is useful when you want to have multiple envs connected to the same db running side by side. 
 Let's say a cms cluster and a site cluster.
